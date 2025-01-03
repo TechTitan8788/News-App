@@ -9,7 +9,7 @@ class App extends Component {
       <div>
         <Navbar />
         <News />
-        <NewsItem />
+  
       </div>
     );
   }
