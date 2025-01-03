@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-class App extends Component {
-  c = "Vishal Lokhande"; // Class property
+import Navbar from "./components/Navbar";
+import News from "./components/News";
+import NewsItem from "./components/NewsItem";
 
+class App extends Component {
   render() {
     return (
       <div>
-        <h1>Hello World {this.c}</h1>
+        <Navbar />
+        <News />
+        <NewsItem />
       </div>
     );
   }
