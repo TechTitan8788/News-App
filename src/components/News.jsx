@@ -6,7 +6,7 @@ export class News extends Component {
     return(
         <div>
             <h1>News</h1>
-        
+         
         </div>  
     )
 }
