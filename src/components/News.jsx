@@ -44,6 +44,7 @@ export class News extends Component {
           "content": "Last week, we at ESPNcricinfo did something we have been thinking of doing for eight years now: pretend-live ball-by-ball commentary for a classic cricket match. We knew the result, yes, but we tried… [+6823 chars]"
         }
       ]
+    
     constructor(){
         super();
       console.log("hello i am a constructor");
@@ -60,20 +61,15 @@ export class News extends Component {
         <div className="container my-3">
             <h2>Newsify - Top Headlines</h2>
             <div className="row">
-                 <div className="col-md-4">
-                  <NewsItem title="vishal" description="hello world" imageUrl="https://cdn.24.co.za/files/Cms/General/d/10743/97d776dc91734e98906c0e1b7f3b1afa.jpg" />  
-                 </div>
 
-                 <div className="col-md-4">
-                  <NewsItem title="vishal" description="hello world" imageUrl="https://cdn.24.co.za/files/Cms/General/d/10743/97d776dc91734e98906c0e1b7f3b1afa.jpg"/>
-                 </div>
-                 
-                 <div className="col-md-4">
-                  <NewsItem title="vishal" description="hello world" imageUrl="https://cdn.24.co.za/files/Cms/General/d/10743/97d776dc91734e98906c0e1b7f3b1afa.jpg" />
-                 </div>
-
-            </div>
-         
+          {this.state.articles.map((element)=>{
+            return(
+              <div className="col-md-4 mb-5" key={element.url}>
+               <NewsItem title={element.title.slice(0,50)} description={element.description.slice(0,100)} imageUrl={element.urlToImage} newsUrl={element.url} />
+              </div>
+            )
+          })}
+         </div>
         </div>  
     )
 }
