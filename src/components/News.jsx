@@ -44,10 +44,10 @@ export class News extends Component {
           "content": "Last week, we at ESPNcricinfo did something we have been thinking of doing for eight years now: pretend-live ball-by-ball commentary for a classic cricket match. We knew the result, yes, but we tried… [+6823 chars]"
         }
       ]
-    
+    s
     constructor(){
         super();
-      console.log("hello i am a constructor");
+        console.log("hello i am a constructor");
       this.state={
          
         articles:this.article,
@@ -55,9 +55,17 @@ export class News extends Component {
 
       }
       }
-      
+      async componentDidMount() {
+        console.log("hello i am a componentDidMount");
+        let url="https://newsdata.io/api/1/news?apikey=pub_64335a891e0057ab7411dc8e12771e62f621e&q=News";
+        let response = await fetch(url);
+        let data = await response.json();
+        console.log(data);
+      }
     render() {
+      console.log("hello i am a render");
     return(
+
         <div className="container my-3">
             <h2>Newsify - Top Headlines</h2>
             <div className="row">
