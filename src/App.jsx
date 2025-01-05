@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import News from "./components/News";
 import NewsItem from "./components/NewsItem";
 
+
 class App extends Component {
   render() {
     return (

@@ -1,33 +1,63 @@
 import React, { Component } from "react";
-import NewsItem from "./NewsItem";
 
 export class News extends Component {
   constructor() {
     super();
     this.state = {
-      articles: [], // Initial state is an empty array
+      articles: [],
       loading: false,
+      nextPage: null, // To store the nextPage token
     };
   }
 
-  async componentDidMount() {
+  async fetchNews(pageToken = null) {
+    this.setState({ loading: true });
+    const baseUrl = "https://newsdata.io/api/1/news";
+    const apiKey = "pub_64335a891e0057ab7411dc8e12771e62f621e";
+    const country = "in";
+    const language = "en";
+    const pageParam = pageToken ? `&page=${pageToken}` : "";
+    const url = `${baseUrl}?apikey=${apiKey}&country=${country}&language=${language}${pageParam}`;
+
     try {
-      let url = "https://newsdata.io/api/1/news?apikey=pub_64335a891e0057ab7411dc8e12771e62f621e&q=News";
-      let data = await fetch(url);
-      let parsedData = await data.json();
-      console.log(parsedData);
-      this.setState({ articles: parsedData.results }); // Corrected to use `results`
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.error("Error response:", await response.json());
+        this.setState({ loading: false });
+        return;
+      }
+      const data = await response.json();
+      this.setState((prevState) => ({
+        articles: pageToken
+          ? [...prevState.articles, ...data.results]
+          : data.results,
+        nextPage: data.nextPage || null,
+        loading: false,
+      }));
     } catch (error) {
       console.error("Error fetching news data:", error);
+      this.setState({ loading: false });
     }
   }
 
+  componentDidMount() {
+    this.fetchNews();
+  }
+
+  handleLoadMore = () => {
+    const { nextPage } = this.state;
+    if (nextPage) {
+      this.fetchNews(nextPage);
+    }
+  };
+
   render() {
-    const { articles } = this.state;
+    const { articles, loading, nextPage } = this.state;
 
     return (
       <div className="container my-3">
         <h2>Newsify - Top Headlines</h2>
+        {loading && <p>Loading...</p>}
         <div className="row">
           {Array.isArray(articles) && articles.length > 0 ? (
             articles.map((element) => (
@@ -41,7 +71,12 @@ export class News extends Component {
                   <div className="card-body">
                     <h5 className="card-title">{element.title}</h5>
                     <p className="card-text">{element.description}</p>
-                    <a href={element.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    <a
+                      href={element.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary"
+                    >
                       Read more
                     </a>
                   </div>
@@ -49,9 +84,20 @@ export class News extends Component {
               </div>
             ))
           ) : (
-            <p>No articles available.</p>
+            !loading && <p>No articles available.</p>
           )}
         </div>
+        {nextPage && (
+          <div className="d-flex justify-content-center">
+            <button
+              className="btn btn-secondary"
+              onClick={this.handleLoadMore}
+              disabled={loading}
+            >
+              Load More
+            </button>
+          </div>
+        )}
       </div>
     );
   }
