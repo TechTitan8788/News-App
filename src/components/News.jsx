@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../News.css";
+import Spinner from "./Spinner";
 
 class News extends Component {
   constructor() {
@@ -81,8 +82,10 @@ class News extends Component {
               "5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.2)",
           }}
         >
+        
           Newsify - Top Headlines
         </h2>
+        {this.state.loading && <Spinner />}
 
         {loading && <p className="text-center">Loading...</p>}
 

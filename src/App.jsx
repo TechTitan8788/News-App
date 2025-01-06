@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 class App extends Component {
   // Method to handle next and prev page click
@@ -12,8 +13,10 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Router>
         <Navbar />
         <News onPagination={this.handlePagination} />
+      </Router>
       </div>
     );
   }
