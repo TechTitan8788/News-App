@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../News.css";
-import Skeleton from "react-loading-skeleton"; // Import Skeleton component
-import "react-loading-skeleton/dist/skeleton.css"; // Import styles for skeleton
+import SkeletonLoader from "./Skeleton"; // Import SkeletonLoader component
 
 class News extends Component {
   constructor() {
@@ -11,10 +10,11 @@ class News extends Component {
       loading: false,
       nextPage: null,
       prevPage: null,
+      category: "politics", // Default category
     };
   }
 
-  fetchNews = async (pageToken = null) => {
+  fetchNews = async (category = "politics", pageToken = null) => {
     this.setState({ loading: true });
 
     if (pageToken) {
@@ -22,7 +22,7 @@ class News extends Component {
     }
 
     const apiKey = "pub_64335a891e0057ab7411dc8e12771e62f621e";
-    const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=in&language=en${
+    const url = `https://newsdata.io/api/1/news?apikey=${apiKey}&country=in&language=en&category=${category}${
       pageToken ? `&page=${pageToken}` : ""
     }`;
 
@@ -51,25 +51,31 @@ class News extends Component {
   };
 
   componentDidMount() {
-    this.fetchNews();
+    this.fetchNews(this.state.category);
   }
+
+  handleCategoryClick = (category) => {
+    this.setState({ category }, () => {
+      this.fetchNews(category);
+    });
+  };
 
   handlePrevClick = () => {
     if (this.state.prevPage) {
-      this.fetchNews(this.state.prevPage);
+      this.fetchNews(this.state.category, this.state.prevPage);
       window.scrollTo(0, 0);
     }
   };
 
   handleNextClick = () => {
     if (this.state.nextPage) {
-      this.fetchNews(this.state.nextPage);
+      this.fetchNews(this.state.category, this.state.nextPage);
       window.scrollTo(0, 0);
     }
   };
 
   render() {
-    const { articles, loading, nextPage, prevPage } = this.state;
+    const { articles, loading, nextPage, prevPage, category } = this.state;
 
     return (
       <div className="container my-3">
@@ -88,96 +94,74 @@ class News extends Component {
           Newsify - Top Headlines
         </h2>
 
-        {/* Show Skeleton loader while loading */}
-        {loading && (
-          <div className="row">
-            {Array(6)
-              .fill(0)
-              .map((_, index) => (
-                <div className="col-md-4 mb-4" key={index}>
-                  <div
-                    className="card"
-                    style={{
-                      width: "320px",
-                      height: "420px",
-                      overflow: "hidden",
-                      position: "relative",
-                    }}
-                  >
-                    <Skeleton height={250} style={{ marginBottom: "10px" }} />
-                    <div className="card-body" style={{ padding: "10px" }}>
-                      <Skeleton
-                        height={20}
-                        width="80%"
-                        style={{ marginBottom: "10px" }}
-                      />
-                      <Skeleton
-                        height={15}
-                        width="90%"
-                        style={{ marginBottom: "10px" }}
-                      />
-                      <Skeleton height={30} width="50%" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        )}
+        {/* Category Buttons */}
+        <div className="d-flex justify-content-end mb-3">
+          {["politics", "entertainment", "sports", "health"].map((cat) => (
+            <button
+              key={cat}
+              className={`btn btn-outline-secondary mx-1 ${
+                category === cat ? "active" : ""
+              }`}
+              onClick={() => this.handleCategoryClick(cat)}
+            >
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </button>
+          ))}
+        </div>
 
-        {/* Display news articles when loaded */}
-        {!loading && (
+        {/* Show Skeleton loader while loading */}
+        {loading ? (
+          <SkeletonLoader />
+        ) : (
+          // Display news articles when loaded
           <div className="row">
-            {articles.length > 0 ? (
-              articles.map((article) => (
-                <div
-                  className="col-md-4 mb-4"
-                  key={article.link || article.title}
-                >
+            {articles.length > 0
+              ? articles.map((article) => (
                   <div
-                    className="card"
-                    style={{
-                      width: "320px",
-                      height: "420px",
-                      overflow: "hidden",
-                      position: "relative",
-                    }}
+                    className="col-md-4 mb-4"
+                    key={article.link || article.title}
                   >
-                    <img
-                      src={
-                        article.image_url || "https://via.placeholder.com/150"
-                      }
-                      className="card-img-top"
-                      alt="news"
+                    <div
+                      className="card"
                       style={{
-                        width: "100%",
-                        height: "250px",
-                        objectFit: "cover",
+                        width: "320px",
+                        height: "420px",
+                        overflow: "hidden",
+                        position: "relative",
                       }}
-                    />
-                    <div className="card-body" style={{ padding: "10px" }}>
-                      <h5
-                        className="card-title"
-                        style={{ fontSize: "1rem", fontWeight: "bold" }}
-                      >
-                        {article.title}
-                      </h5>
-                      <p className="card-text" style={{ fontSize: "0.85rem" }}>
-                        {article.description}
-                      </p>
-                      <button
-                        className="btn btn-primary position-absolute"
-                        style={{ bottom: "5px", left: "5px" }}
-                        onClick={() => window.open(article.link, "_blank")}
-                      >
-                        Read More
-                      </button>
+                    >
+                      <img
+                        src={article.image_url || "https://via.placeholder.com/150"}
+                        className="card-img-top"
+                        alt="news"
+                        style={{
+                          width: "100%",
+                          height: "250px",
+                          objectFit: "cover",
+                        }}
+                      />
+                      <div className="card-body" style={{ padding: "10px" }}>
+                        <h5
+                          className="card-title"
+                          style={{ fontSize: "1rem", fontWeight: "bold" }}
+                        >
+                          {article.title}
+                        </h5>
+                        <p className="card-text" style={{ fontSize: "0.85rem" }}>
+                          {article.description}
+                        </p>
+                        <button
+                          className="btn btn-primary position-absolute"
+                          style={{ bottom: "5px", left: "5px" }}
+                          onClick={() => window.open(article.link, "_blank")}
+                        >
+                          Read More
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-center">No articles available.</p>
-            )}
+                ))
+              : <p className="text-center">No articles available.</p>}
           </div>
         )}
 
