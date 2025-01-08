@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../News.css";
-import Spinner from "./Spinner";
+import Skeleton from "react-loading-skeleton"; // Import Skeleton component
+import "react-loading-skeleton/dist/skeleton.css"; // Import styles for skeleton
 
 class News extends Component {
   constructor() {
@@ -56,12 +57,14 @@ class News extends Component {
   handlePrevClick = () => {
     if (this.state.prevPage) {
       this.fetchNews(this.state.prevPage);
+      window.scrollTo(0, 0);
     }
   };
 
   handleNextClick = () => {
     if (this.state.nextPage) {
       this.fetchNews(this.state.nextPage);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -82,16 +85,50 @@ class News extends Component {
               "5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.2)",
           }}
         >
-        
           Newsify - Top Headlines
         </h2>
-        {this.state.loading && <Spinner />}
 
-        {loading && <p className="text-center">Loading...</p>}
+        {/* Show Skeleton loader while loading */}
+        {loading && (
+          <div className="row">
+            {Array(6)
+              .fill(0)
+              .map((_, index) => (
+                <div className="col-md-4 mb-4" key={index}>
+                  <div
+                    className="card"
+                    style={{
+                      width: "320px",
+                      height: "420px",
+                      overflow: "hidden",
+                      position: "relative",
+                    }}
+                  >
+                    <Skeleton height={250} style={{ marginBottom: "10px" }} />
+                    <div className="card-body" style={{ padding: "10px" }}>
+                      <Skeleton
+                        height={20}
+                        width="80%"
+                        style={{ marginBottom: "10px" }}
+                      />
+                      <Skeleton
+                        height={15}
+                        width="90%"
+                        style={{ marginBottom: "10px" }}
+                      />
+                      <Skeleton height={30} width="50%" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
+        )}
 
-        <div className="row">
-          {articles.length > 0
-            ? articles.map((article) => (
+        {/* Display news articles when loaded */}
+        {!loading && (
+          <div className="row">
+            {articles.length > 0 ? (
+              articles.map((article) => (
                 <div
                   className="col-md-4 mb-4"
                   key={article.link || article.title}
@@ -138,8 +175,11 @@ class News extends Component {
                   </div>
                 </div>
               ))
-            : !loading && <p className="text-center">No articles available.</p>}
-        </div>
+            ) : (
+              <p className="text-center">No articles available.</p>
+            )}
+          </div>
+        )}
 
         <div className="pagination-buttons d-flex justify-content-between mt-4">
           <button
