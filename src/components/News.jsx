@@ -79,7 +79,7 @@ class News extends Component {
   };
 
   render() {
-    const { articles, loading, nextPage, prevPage, category } = this.state;
+    const { articles, loading, nextPage, prevPage, category ,  } = this.state;
 
     return (
       <div className="container my-3">

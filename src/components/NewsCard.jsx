@@ -28,11 +28,16 @@ const NewsCard = ({ article }) => {
             className="card-title"
             style={{ fontSize: "1rem", fontWeight: "bold" }}
           >
-            {article.title}
+            {article.title.slice(0, 50)}
           </h5>
+          <p className="card-text"><small className="text-muted"><strong>By {article.source_name.slice(0,15)} On {article.pubDate}</strong></small></p>
+          
           <p className="card-text" style={{ fontSize: "0.85rem" }}>
-            {article.description}
-          </p>
+  {(article.description || "No description is available for this article  Please read the full article click on Read more Button").slice(0,120) + "..."}
+</p>
+
+
+          
           <button
             className="btn btn-primary position-absolute"
             style={{ bottom: "5px", left: "5px" }}
