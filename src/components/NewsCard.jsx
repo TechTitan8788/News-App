@@ -33,7 +33,7 @@ const NewsCard = ({ article }) => {
           <p className="card-text"><small className="text-muted"><strong>By {article.source_name.slice(0,15)} On {article.pubDate}</strong></small></p>
           
           <p className="card-text" style={{ fontSize: "0.85rem" }}>
-  {(article.description || "No description is available for this article  Please read the full article click on Read more Button").slice(0,120) + "..."}
+  {(article.description || "No description is available for this. Click on the 'Read More' button to read the full news in detail.").slice(0,120) + "..."}
 </p>
 
 
