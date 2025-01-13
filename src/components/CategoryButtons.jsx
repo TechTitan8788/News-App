@@ -1,6 +1,12 @@
 import React from "react";
 
 const CategoryButtons = ({ category, onCategoryClick }) => {
+  const categories = [
+    "Business", "Crime", "Domestic", "Education", "Entertainment", 
+    "Environment", "Food", "Health", "Lifestyle", "Other", 
+    "Politics", "Science", "Sports", "Technology", "Tourism", "World"
+  ];
+
   return (
     <div>
       {/* Heading */}
@@ -8,7 +14,7 @@ const CategoryButtons = ({ category, onCategoryClick }) => {
       
       {/* Buttons */}
       <div className="row justify-content-end mb-3">
-        {["Politics", "Entertainment", "Sports", "Health"].map((cat) => (
+        {categories.map((cat) => (
           <div key={cat} className="col-6 col-sm-3 mb-2">
             <button
               className={`btn btn-outline-success w-100 ${

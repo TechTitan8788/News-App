@@ -1,4 +1,3 @@
-// News.js
 import React, { Component } from "react";
 import "../News.css";
 import SkeletonLoader from "./Skeleton"; // Import SkeletonLoader component
@@ -14,12 +13,11 @@ class News extends Component {
       loading: false,
       nextPage: null,
       prevPage: null,
-      category: "All",
-      // Default category
+      category: "Top", // Default category
     };
   }
 
-  fetchNews = async (category = "politics", pageToken = null) => {
+  fetchNews = async (category = "Top", pageToken = null) => {
     this.setState({ loading: true });
 
     if (pageToken) {
@@ -94,8 +92,7 @@ class News extends Component {
             fontSize: "calc(1.5rem + 1vw)", // Adjusts size based on screen width
           }}
         >
-          Newsify &mdash; Top {this.state.category} Headlines <br />
-         
+          Newsify &mdash; {this.state.category} Headlines <br />
         </h2>
 
         {/* Category Buttons */}
