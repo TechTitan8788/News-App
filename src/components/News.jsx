@@ -18,6 +18,9 @@ class News extends Component {
   }
 
   fetchNews = async (category = "Top", pageToken = null) => {
+    // Start progress
+    this.props.setProgress(30);
+
     this.setState({ loading: true });
 
     if (pageToken) {
@@ -43,13 +46,18 @@ class News extends Component {
 
         // Pass the pagination props to App component
         this.props.onPagination(data.nextPage, data.prevPage);
+
+        // Complete progress
+        this.props.setProgress(100);
       } else {
         console.error("Error:", data);
         this.setState({ loading: false });
+        this.props.setProgress(100); // Finish progress even if there is an error
       }
     } catch (error) {
       console.error("Error fetching news:", error);
       this.setState({ loading: false });
+      this.props.setProgress(100); // Finish progress on error
     }
   };
 
@@ -58,6 +66,7 @@ class News extends Component {
   }
 
   handleCategoryClick = (category) => {
+    this.props.setProgress(10); // Start progress
     this.setState({ category }, () => {
       this.fetchNews(category);
     });
@@ -65,6 +74,7 @@ class News extends Component {
 
   handlePrevClick = () => {
     if (this.state.prevPage) {
+      this.props.setProgress(10); // Start progress
       this.fetchNews(this.state.category, this.state.prevPage);
       window.scrollTo(0, 0);
     }
@@ -72,6 +82,7 @@ class News extends Component {
 
   handleNextClick = () => {
     if (this.state.nextPage) {
+      this.props.setProgress(10); // Start progress
       this.fetchNews(this.state.category, this.state.nextPage);
       window.scrollTo(0, 0);
     }
@@ -99,11 +110,12 @@ class News extends Component {
         <CategoryButtons
           category={category}
           onCategoryClick={this.handleCategoryClick}
+          setProgress={this.props.setProgress}
         />
 
         {/* Show Skeleton loader while loading */}
         {loading ? (
-          <SkeletonLoader />
+          <SkeletonLoader setProgress={this.props.setProgress} />
         ) : (
           // Display news articles when loaded
           <div className="row">
@@ -126,6 +138,7 @@ class News extends Component {
           nextPage={nextPage}
           onPrevClick={this.handlePrevClick}
           onNextClick={this.handleNextClick}
+          setProgress={this.props.setProgress}
         />
       </div>
     );

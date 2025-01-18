@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export class NewsItem extends Component {
   render() {
-    let { title, description, imageUrl, newsUrl, source_name, pubDate } = this.props;
+    let { title, description, imageUrl, newsUrl, source_name, pubDate ,} = this.props;
 
     return (
       <div>
@@ -27,6 +27,7 @@ export class NewsItem extends Component {
                 display: "inline-block", // Button inline rakhne ke liye
                 whiteSpace: "nowrap", // Extra wrapping avoid karne ke liye
               }}
+              
             >
               Read More
             </a>
