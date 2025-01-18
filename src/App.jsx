@@ -1,29 +1,25 @@
-import React, { Component } from "react";
+import React from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { BrowserRouter as Router } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 
-class App extends Component {
-  state = {
-    progress: 0,
+const App = () => {
+  const [progress, setProgress] = React.useState(0);
+
+  const updateProgress = (newProgress) => {
+    setProgress(newProgress);
   };
 
-  setProgress = (progress) => {
-    this.setState({ progress });
-  };
-
-  render() {
-    return (
-      <div>
-        <Router>
-          <Navbar />
-          <LoadingBar color="#f11946" progress={this.state.progress} />
-          <News setProgress={this.setProgress} />
-        </Router>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Router>
+        <Navbar />
+        <LoadingBar color="#f11946" progress={progress} />
+        <News setProgress={updateProgress} />
+      </Router>
+    </div>
+  );
+};
 
 export default App;

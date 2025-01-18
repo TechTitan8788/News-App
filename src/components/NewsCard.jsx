@@ -1,8 +1,6 @@
-// NewsCard.js
 import React from "react";
 
 const NewsCard = ({ article }) => {
-
   return (
     <div className="col-md-4 mb-4" key={article.link || article.title}>
       <div
@@ -29,16 +27,23 @@ const NewsCard = ({ article }) => {
             className="card-title"
             style={{ fontSize: "1rem", fontWeight: "bold" }}
           >
-            {article.title.slice(0, 50)+"...."}
+            {article.title.slice(0, 50) + "...."}
           </h5>
-          <p className="card-text"><small className="text-muted"><strong>By {article.source_name.slice(0,15)} On {article.pubDate}</strong></small></p>
-          
+          <p className="card-text">
+            <small className="text-muted">
+              <strong>
+                By {article.source_name.slice(0, 15)} On {article.pubDate}
+              </strong>
+            </small>
+          </p>
+
           <p className="card-text" style={{ fontSize: "0.85rem" }}>
-  {(article.description || "No description is available for this. Click on the 'Read More' button to read the full news in detail.").slice(0,120) + "..."}
-</p>
+            {(
+              article.description ||
+              "No description is available for this. Click on the 'Read More' button to read the full news in detail."
+            ).slice(0, 120) + "..."}
+          </p>
 
-
-          
           <button
             className="btn btn-primary position-absolute"
             style={{ bottom: "5px", left: "5px" }}

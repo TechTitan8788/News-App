@@ -1,12 +1,6 @@
 import React from "react";
 
-const Pagination = ({
-  prevPage,
-  nextPage,
-  onPrevClick,
-  onNextClick,
-  setProgress,
-}) => {
+const Pagination = ({ prevPage, nextPage, onPrevClick, onNextClick, setProgress }) => {
   const handlePrevClick = () => {
     setProgress(30); // Start loading
     onPrevClick();
