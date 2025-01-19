@@ -88,7 +88,7 @@ const News = ({ setProgress }) => {
     paddingBottom: "10px", // Increase the space between text and the underline
   }}
 >
-  Newsify &mdash; {category} Headlines <br />
+  # Newsify &mdash; {category} Headlines <br />
 </h2>
 
 
