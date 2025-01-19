@@ -74,16 +74,18 @@ const News = ({ setProgress }) => {
 
   return (
     <div className="container my-3">
-      <h2
+    <h2
   className="text-center my-4 mb-5"
   style={{
-    color: "#343a40",
+    color: "#6c757d",
     fontWeight: "700",
     textShadow:
       "5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(0, 0, 0, 0.2)",
     fontSize: "calc(1.5rem + 1vw)",
     opacity: 0.9,
-    paddingTop: "50px",  // Add padding to push it below the fixed navbar
+    paddingTop: "50px", // Add padding to push it below the fixed navbar
+    borderBottom: "4px solid #6c757d", // Add a border below the text
+    paddingBottom: "10px", // Increase the space between text and the underline
   }}
 >
   Newsify &mdash; {category} Headlines <br />
