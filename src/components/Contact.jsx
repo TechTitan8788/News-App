@@ -25,7 +25,10 @@ const Contact = () => {
   };
 
   return (
-    <div className="container my-5" style={{ paddingTop: "70px", position: "relative" }}>
+    <div
+      className="container my-5"
+      style={{ paddingTop: "70px", position: "relative" }}
+    >
       {/* Background */}
       <div
         className="background"
@@ -36,36 +39,44 @@ const Contact = () => {
           right: "0",
           bottom: "0",
           zIndex: "-1",
-          backgroundImage: "linear-gradient(45deg, #ff6f61, #ffac61, #ffdc61)",
+          backgroundColor:"aqua",
           opacity: "0.5",
-          filter: "blur(15px)",
+          filter: "blur(1000px)",
         }}
       ></div>
 
       {/* Contact Section */}
       <div className="row justify-content-center mt-5">
-        <div className="col-md-8">
+        <div className="col-12 col-md-8">
           <div
-            className="card shadow-lg p-5 mb-5 bg-light rounded-lg"
+            className="card shadow-lg p-4 mb-4 bg-light rounded-lg"
             style={{
               transition: "all 0.3s ease-in-out",
               boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-              borderRadius: "20px",
+              borderRadius: "15px",
               background: "rgba(255, 255, 255, 0.9)",
             }}
           >
             <div className="card-body">
-              <h2 className="text-center text-primary mb-4 font-weight-bold" style={{ fontSize: "2.5rem" }}>
+              <h2
+                className="text-center text-primary mb-4 font-weight-bold"
+                style={{ fontSize: "2rem" }}
+              >
                 Contact Us
               </h2>
-              <p className="lead text-muted" style={{ fontSize: "1.1rem", lineHeight: "1.7" }}>
-                If you have any questions, feel free to reach out to us. We're here to assist you with all your inquiries.
+              <p
+                className="lead text-muted"
+                style={{ fontSize: "1rem", lineHeight: "1.6" }}
+              >
+                If you have any questions, feel free to reach out to us. We're
+                here to assist you with all your inquiries.
               </p>
 
               {/* Success Alert */}
               {alertVisible && (
                 <div className="alert alert-success text-center" role="alert">
-                  Your message has been sent successfully! We will get back to you soon.
+                  Your message has been sent successfully! We will get back to
+                  you soon.
                 </div>
               )}
 
@@ -117,7 +128,11 @@ const Contact = () => {
                 </div>
 
                 <div className="text-center mt-4">
-                  <button type="submit" className="btn btn-primary btn-lg">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    style={{ fontSize: "1rem" }}
+                  >
                     Send Message
                   </button>
                 </div>
@@ -127,27 +142,7 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Footer Section */}
-      <footer
-        className="text-center mt-5 py-3"
-        style={{
-          backgroundColor: "#34495e",
-          color: "#ecf0f1",
-          fontSize: "1rem",
-          letterSpacing: "0.3px",
-          borderRadius: "10px",
-          opacity: "0.9",
-        }}
-      >
-        <div className="container">
-          <p className="m-0" style={{ fontWeight: "400", lineHeight: "1.6" }}>
-            © 2025 Vishal Lokhande. All Rights Reserved.
-          </p>
-          <p className="m-0" style={{ fontWeight: "300", lineHeight: "1.6" }}>
-            Powered by <span style={{ fontWeight: "400" }}>NewsData API</span>
-          </p>
-        </div>
-      </footer>
+      
     </div>
   );
 };

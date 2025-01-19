@@ -74,6 +74,20 @@ const News = ({ setProgress }) => {
 
   return (
     <div className="container my-3">
+       <div
+        className="background"
+        style={{
+          position: "absolute",
+          top: "0",
+          left: "0",
+          right: "0",
+          bottom: "0",
+          zIndex: "-1",
+          backgroundColor:"aqua",
+          opacity: "0.4",
+          filter: "blur(500px)",
+        }}
+        ></div>
     <h2
   className="text-center my-4 mb-5"
   style={{
@@ -119,7 +133,9 @@ const News = ({ setProgress }) => {
         onNextClick={handleNextClick}
         setProgress={setProgress}
       />
+      
     </div>
+    
   );
 };
 
